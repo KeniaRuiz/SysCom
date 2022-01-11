@@ -1,0 +1,720 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="bdsyscomModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Actualizaciones">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_recepcion" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Actualizacion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cActivo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Estatus" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cEstatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="estatus" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="clientes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="50" />
+          <Property Name="Usuario" Type="varchar" MaxLength="50" />
+          <Property Name="Contrasena" Type="varchar" MaxLength="50" />
+          <Property Name="Tipo" Type="int" />
+        </EntityType>
+        <EntityType Name="empleados">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Contraseña" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estatus" Type="int" Nullable="false" />
+          <Property Name="Tipo" Type="int" />
+        </EntityType>
+        <EntityType Name="recepcion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cliente" Type="int" Nullable="false" />
+          <Property Name="Problema" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Equipo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fecha_inicio" Type="datetime" Nullable="false" />
+          <Property Name="Fecha_fin" Type="datetime" Nullable="false" />
+          <Property Name="Empleado_recepcion" Type="int" Nullable="false" />
+          <Property Name="Empleado_tecnico" Type="int" />
+          <Property Name="Estatus" Type="int" Nullable="false" />
+          <Property Name="imagen" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="soporte">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cliente" Type="int" Nullable="false" />
+          <Property Name="Actividad" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fecha_inicio" Type="datetime" Nullable="false" />
+          <Property Name="Fecha_Fin" Type="datetime" />
+          <Property Name="Empleado_recepcion" Type="int" Nullable="false" />
+          <Property Name="Empleado_tecnico" Type="int" />
+          <Property Name="Estatus" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tipo_Usuario">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Actualizaciones_recepcion">
+          <End Role="recepcion" Type="Self.recepcion" Multiplicity="1" />
+          <End Role="Actualizaciones" Type="Self.Actualizaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recepcion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Actualizaciones">
+              <PropertyRef Name="ID_recepcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_clientes_Tipo_Usuario">
+          <End Role="Tipo_Usuario" Type="Self.Tipo_Usuario" Multiplicity="0..1" />
+          <End Role="clientes" Type="Self.clientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Usuario">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="clientes">
+              <PropertyRef Name="Tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_empleados_cActivo">
+          <End Role="cActivo" Type="Self.cActivo" Multiplicity="1" />
+          <End Role="empleados" Type="Self.empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cActivo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="empleados">
+              <PropertyRef Name="Estatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_empleados_Tipo_Usuario">
+          <End Role="Tipo_Usuario" Type="Self.Tipo_Usuario" Multiplicity="0..1" />
+          <End Role="empleados" Type="Self.empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Usuario">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="empleados">
+              <PropertyRef Name="Tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recepcion_cEstatus">
+          <End Role="cEstatus" Type="Self.cEstatus" Multiplicity="1" />
+          <End Role="recepcion" Type="Self.recepcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cEstatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recepcion">
+              <PropertyRef Name="Estatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recepcion_clientes">
+          <End Role="clientes" Type="Self.clientes" Multiplicity="1" />
+          <End Role="recepcion" Type="Self.recepcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recepcion">
+              <PropertyRef Name="Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recepcion_empleados">
+          <End Role="empleados" Type="Self.empleados" Multiplicity="1" />
+          <End Role="recepcion" Type="Self.recepcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleados">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recepcion">
+              <PropertyRef Name="Empleado_recepcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recepcion_empleados1">
+          <End Role="empleados" Type="Self.empleados" Multiplicity="0..1" />
+          <End Role="recepcion" Type="Self.recepcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleados">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recepcion">
+              <PropertyRef Name="Empleado_tecnico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_soporte_cEstatus">
+          <End Role="cEstatus" Type="Self.cEstatus" Multiplicity="1" />
+          <End Role="soporte" Type="Self.soporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cEstatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="soporte">
+              <PropertyRef Name="Estatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_soporte_clientes">
+          <End Role="clientes" Type="Self.clientes" Multiplicity="1" />
+          <End Role="soporte" Type="Self.soporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="soporte">
+              <PropertyRef Name="Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_soporte_empleados">
+          <End Role="empleados" Type="Self.empleados" Multiplicity="1" />
+          <End Role="soporte" Type="Self.soporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleados">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="soporte">
+              <PropertyRef Name="Empleado_recepcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_soporte_empleados1">
+          <End Role="empleados" Type="Self.empleados" Multiplicity="0..1" />
+          <End Role="soporte" Type="Self.soporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleados">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="soporte">
+              <PropertyRef Name="Empleado_tecnico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bdsyscomModelStoreContainer">
+          <EntitySet Name="Actualizaciones" EntityType="Self.Actualizaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cActivo" EntityType="Self.cActivo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cEstatus" EntityType="Self.cEstatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="clientes" EntityType="Self.clientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="empleados" EntityType="Self.empleados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="recepcion" EntityType="Self.recepcion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="soporte" EntityType="Self.soporte" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipo_Usuario" EntityType="Self.Tipo_Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Actualizaciones_recepcion" Association="Self.FK_Actualizaciones_recepcion">
+            <End Role="recepcion" EntitySet="recepcion" />
+            <End Role="Actualizaciones" EntitySet="Actualizaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_clientes_Tipo_Usuario" Association="Self.FK_clientes_Tipo_Usuario">
+            <End Role="Tipo_Usuario" EntitySet="Tipo_Usuario" />
+            <End Role="clientes" EntitySet="clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_empleados_cActivo" Association="Self.FK_empleados_cActivo">
+            <End Role="cActivo" EntitySet="cActivo" />
+            <End Role="empleados" EntitySet="empleados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_empleados_Tipo_Usuario" Association="Self.FK_empleados_Tipo_Usuario">
+            <End Role="Tipo_Usuario" EntitySet="Tipo_Usuario" />
+            <End Role="empleados" EntitySet="empleados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recepcion_cEstatus" Association="Self.FK_recepcion_cEstatus">
+            <End Role="cEstatus" EntitySet="cEstatus" />
+            <End Role="recepcion" EntitySet="recepcion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recepcion_clientes" Association="Self.FK_recepcion_clientes">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="recepcion" EntitySet="recepcion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recepcion_empleados" Association="Self.FK_recepcion_empleados">
+            <End Role="empleados" EntitySet="empleados" />
+            <End Role="recepcion" EntitySet="recepcion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recepcion_empleados1" Association="Self.FK_recepcion_empleados1">
+            <End Role="empleados" EntitySet="empleados" />
+            <End Role="recepcion" EntitySet="recepcion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_soporte_cEstatus" Association="Self.FK_soporte_cEstatus">
+            <End Role="cEstatus" EntitySet="cEstatus" />
+            <End Role="soporte" EntitySet="soporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_soporte_clientes" Association="Self.FK_soporte_clientes">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="soporte" EntitySet="soporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_soporte_empleados" Association="Self.FK_soporte_empleados">
+            <End Role="empleados" EntitySet="empleados" />
+            <End Role="soporte" EntitySet="soporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_soporte_empleados1" Association="Self.FK_soporte_empleados1">
+            <End Role="empleados" EntitySet="empleados" />
+            <End Role="soporte" EntitySet="soporte" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bdsyscomModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="bdsyscomEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Actualizaciones" EntityType="bdsyscomModel.Actualizaciones" />
+          <EntitySet Name="cActivo" EntityType="bdsyscomModel.cActivo" />
+          <EntitySet Name="cEstatus" EntityType="bdsyscomModel.cEstatus" />
+          <EntitySet Name="clientes" EntityType="bdsyscomModel.clientes" />
+          <EntitySet Name="empleados" EntityType="bdsyscomModel.empleados" />
+          <EntitySet Name="recepcion" EntityType="bdsyscomModel.recepcion" />
+          <EntitySet Name="soporte" EntityType="bdsyscomModel.soporte" />
+          <EntitySet Name="Tipo_Usuario" EntityType="bdsyscomModel.Tipo_Usuario" />
+          <AssociationSet Name="FK_Actualizaciones_recepcion" Association="bdsyscomModel.FK_Actualizaciones_recepcion">
+            <End Role="recepcion" EntitySet="recepcion" />
+            <End Role="Actualizaciones" EntitySet="Actualizaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_empleados_cActivo" Association="bdsyscomModel.FK_empleados_cActivo">
+            <End Role="cActivo" EntitySet="cActivo" />
+            <End Role="empleados" EntitySet="empleados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recepcion_cEstatus" Association="bdsyscomModel.FK_recepcion_cEstatus">
+            <End Role="cEstatus" EntitySet="cEstatus" />
+            <End Role="recepcion" EntitySet="recepcion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_soporte_cEstatus" Association="bdsyscomModel.FK_soporte_cEstatus">
+            <End Role="cEstatus" EntitySet="cEstatus" />
+            <End Role="soporte" EntitySet="soporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_clientes_Tipo_Usuario" Association="bdsyscomModel.FK_clientes_Tipo_Usuario">
+            <End Role="Tipo_Usuario" EntitySet="Tipo_Usuario" />
+            <End Role="clientes" EntitySet="clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recepcion_clientes" Association="bdsyscomModel.FK_recepcion_clientes">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="recepcion" EntitySet="recepcion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_soporte_clientes" Association="bdsyscomModel.FK_soporte_clientes">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="soporte" EntitySet="soporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_empleados_Tipo_Usuario" Association="bdsyscomModel.FK_empleados_Tipo_Usuario">
+            <End Role="Tipo_Usuario" EntitySet="Tipo_Usuario" />
+            <End Role="empleados" EntitySet="empleados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recepcion_empleados" Association="bdsyscomModel.FK_recepcion_empleados">
+            <End Role="empleados" EntitySet="empleados" />
+            <End Role="recepcion" EntitySet="recepcion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recepcion_empleados1" Association="bdsyscomModel.FK_recepcion_empleados1">
+            <End Role="empleados" EntitySet="empleados" />
+            <End Role="recepcion" EntitySet="recepcion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_soporte_empleados" Association="bdsyscomModel.FK_soporte_empleados">
+            <End Role="empleados" EntitySet="empleados" />
+            <End Role="soporte" EntitySet="soporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_soporte_empleados1" Association="bdsyscomModel.FK_soporte_empleados1">
+            <End Role="empleados" EntitySet="empleados" />
+            <End Role="soporte" EntitySet="soporte" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Actualizaciones">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_recepcion" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Actualizacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="recepcion" Relationship="bdsyscomModel.FK_Actualizaciones_recepcion" FromRole="Actualizaciones" ToRole="recepcion" />
+        </EntityType>
+        <EntityType Name="cActivo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Estatus" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="empleados" Relationship="bdsyscomModel.FK_empleados_cActivo" FromRole="cActivo" ToRole="empleados" />
+        </EntityType>
+        <EntityType Name="cEstatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estatus" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="recepcion" Relationship="bdsyscomModel.FK_recepcion_cEstatus" FromRole="cEstatus" ToRole="recepcion" />
+          <NavigationProperty Name="soporte" Relationship="bdsyscomModel.FK_soporte_cEstatus" FromRole="cEstatus" ToRole="soporte" />
+        </EntityType>
+        <EntityType Name="clientes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo" Type="Int32" />
+          <NavigationProperty Name="Tipo_Usuario" Relationship="bdsyscomModel.FK_clientes_Tipo_Usuario" FromRole="clientes" ToRole="Tipo_Usuario" />
+          <NavigationProperty Name="recepcion" Relationship="bdsyscomModel.FK_recepcion_clientes" FromRole="clientes" ToRole="recepcion" />
+          <NavigationProperty Name="soporte" Relationship="bdsyscomModel.FK_soporte_clientes" FromRole="clientes" ToRole="soporte" />
+        </EntityType>
+        <EntityType Name="empleados">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Usuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Contraseña" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estatus" Type="Int32" Nullable="false" />
+          <Property Name="Tipo" Type="Int32" />
+          <NavigationProperty Name="cActivo" Relationship="bdsyscomModel.FK_empleados_cActivo" FromRole="empleados" ToRole="cActivo" />
+          <NavigationProperty Name="Tipo_Usuario" Relationship="bdsyscomModel.FK_empleados_Tipo_Usuario" FromRole="empleados" ToRole="Tipo_Usuario" />
+          <NavigationProperty Name="recepcion" Relationship="bdsyscomModel.FK_recepcion_empleados" FromRole="empleados" ToRole="recepcion" />
+          <NavigationProperty Name="recepcion1" Relationship="bdsyscomModel.FK_recepcion_empleados1" FromRole="empleados" ToRole="recepcion" />
+          <NavigationProperty Name="soporte" Relationship="bdsyscomModel.FK_soporte_empleados" FromRole="empleados" ToRole="soporte" />
+          <NavigationProperty Name="soporte1" Relationship="bdsyscomModel.FK_soporte_empleados1" FromRole="empleados" ToRole="soporte" />
+        </EntityType>
+        <EntityType Name="recepcion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cliente" Type="Int32" Nullable="false" />
+          <Property Name="Problema" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Equipo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_inicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_fin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Empleado_recepcion" Type="Int32" Nullable="false" />
+          <Property Name="Empleado_tecnico" Type="Int32" />
+          <Property Name="Estatus" Type="Int32" Nullable="false" />
+          <Property Name="imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Actualizaciones" Relationship="bdsyscomModel.FK_Actualizaciones_recepcion" FromRole="recepcion" ToRole="Actualizaciones" />
+          <NavigationProperty Name="cEstatus" Relationship="bdsyscomModel.FK_recepcion_cEstatus" FromRole="recepcion" ToRole="cEstatus" />
+          <NavigationProperty Name="clientes" Relationship="bdsyscomModel.FK_recepcion_clientes" FromRole="recepcion" ToRole="clientes" />
+          <NavigationProperty Name="empleados" Relationship="bdsyscomModel.FK_recepcion_empleados" FromRole="recepcion" ToRole="empleados" />
+          <NavigationProperty Name="empleados1" Relationship="bdsyscomModel.FK_recepcion_empleados1" FromRole="recepcion" ToRole="empleados" />
+        </EntityType>
+        <EntityType Name="soporte">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cliente" Type="Int32" Nullable="false" />
+          <Property Name="Actividad" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_inicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_Fin" Type="DateTime" Precision="3" />
+          <Property Name="Empleado_recepcion" Type="Int32" Nullable="false" />
+          <Property Name="Empleado_tecnico" Type="Int32" />
+          <Property Name="Estatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cEstatus" Relationship="bdsyscomModel.FK_soporte_cEstatus" FromRole="soporte" ToRole="cEstatus" />
+          <NavigationProperty Name="clientes" Relationship="bdsyscomModel.FK_soporte_clientes" FromRole="soporte" ToRole="clientes" />
+          <NavigationProperty Name="empleados" Relationship="bdsyscomModel.FK_soporte_empleados" FromRole="soporte" ToRole="empleados" />
+          <NavigationProperty Name="empleados1" Relationship="bdsyscomModel.FK_soporte_empleados1" FromRole="soporte" ToRole="empleados" />
+        </EntityType>
+        <EntityType Name="Tipo_Usuario">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="clientes" Relationship="bdsyscomModel.FK_clientes_Tipo_Usuario" FromRole="Tipo_Usuario" ToRole="clientes" />
+          <NavigationProperty Name="empleados" Relationship="bdsyscomModel.FK_empleados_Tipo_Usuario" FromRole="Tipo_Usuario" ToRole="empleados" />
+        </EntityType>
+        <Association Name="FK_Actualizaciones_recepcion">
+          <End Type="bdsyscomModel.recepcion" Role="recepcion" Multiplicity="1" />
+          <End Type="bdsyscomModel.Actualizaciones" Role="Actualizaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recepcion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Actualizaciones">
+              <PropertyRef Name="ID_recepcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_empleados_cActivo">
+          <End Type="bdsyscomModel.cActivo" Role="cActivo" Multiplicity="1" />
+          <End Type="bdsyscomModel.empleados" Role="empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cActivo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="empleados">
+              <PropertyRef Name="Estatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recepcion_cEstatus">
+          <End Type="bdsyscomModel.cEstatus" Role="cEstatus" Multiplicity="1" />
+          <End Type="bdsyscomModel.recepcion" Role="recepcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cEstatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recepcion">
+              <PropertyRef Name="Estatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_soporte_cEstatus">
+          <End Type="bdsyscomModel.cEstatus" Role="cEstatus" Multiplicity="1" />
+          <End Type="bdsyscomModel.soporte" Role="soporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cEstatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="soporte">
+              <PropertyRef Name="Estatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_clientes_Tipo_Usuario">
+          <End Type="bdsyscomModel.Tipo_Usuario" Role="Tipo_Usuario" Multiplicity="0..1" />
+          <End Type="bdsyscomModel.clientes" Role="clientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Usuario">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="clientes">
+              <PropertyRef Name="Tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recepcion_clientes">
+          <End Type="bdsyscomModel.clientes" Role="clientes" Multiplicity="1" />
+          <End Type="bdsyscomModel.recepcion" Role="recepcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recepcion">
+              <PropertyRef Name="Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_soporte_clientes">
+          <End Type="bdsyscomModel.clientes" Role="clientes" Multiplicity="1" />
+          <End Type="bdsyscomModel.soporte" Role="soporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="soporte">
+              <PropertyRef Name="Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_empleados_Tipo_Usuario">
+          <End Type="bdsyscomModel.Tipo_Usuario" Role="Tipo_Usuario" Multiplicity="0..1" />
+          <End Type="bdsyscomModel.empleados" Role="empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_Usuario">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="empleados">
+              <PropertyRef Name="Tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recepcion_empleados">
+          <End Type="bdsyscomModel.empleados" Role="empleados" Multiplicity="1" />
+          <End Type="bdsyscomModel.recepcion" Role="recepcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleados">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recepcion">
+              <PropertyRef Name="Empleado_recepcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recepcion_empleados1">
+          <End Type="bdsyscomModel.empleados" Role="empleados" Multiplicity="0..1" />
+          <End Type="bdsyscomModel.recepcion" Role="recepcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleados">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recepcion">
+              <PropertyRef Name="Empleado_tecnico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_soporte_empleados">
+          <End Type="bdsyscomModel.empleados" Role="empleados" Multiplicity="1" />
+          <End Type="bdsyscomModel.soporte" Role="soporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleados">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="soporte">
+              <PropertyRef Name="Empleado_recepcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_soporte_empleados1">
+          <End Type="bdsyscomModel.empleados" Role="empleados" Multiplicity="0..1" />
+          <End Type="bdsyscomModel.soporte" Role="soporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleados">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="soporte">
+              <PropertyRef Name="Empleado_tecnico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bdsyscomModelStoreContainer" CdmEntityContainer="bdsyscomEntities">
+          <EntitySetMapping Name="Actualizaciones">
+            <EntityTypeMapping TypeName="bdsyscomModel.Actualizaciones">
+              <MappingFragment StoreEntitySet="Actualizaciones">
+                <ScalarProperty Name="Actualizacion" ColumnName="Actualizacion" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="ID_recepcion" ColumnName="ID_recepcion" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cActivo">
+            <EntityTypeMapping TypeName="bdsyscomModel.cActivo">
+              <MappingFragment StoreEntitySet="cActivo">
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cEstatus">
+            <EntityTypeMapping TypeName="bdsyscomModel.cEstatus">
+              <MappingFragment StoreEntitySet="cEstatus">
+                <ScalarProperty Name="estatus" ColumnName="estatus" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="clientes">
+            <EntityTypeMapping TypeName="bdsyscomModel.clientes">
+              <MappingFragment StoreEntitySet="clientes">
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="empleados">
+            <EntityTypeMapping TypeName="bdsyscomModel.empleados">
+              <MappingFragment StoreEntitySet="empleados">
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="recepcion">
+            <EntityTypeMapping TypeName="bdsyscomModel.recepcion">
+              <MappingFragment StoreEntitySet="recepcion">
+                <ScalarProperty Name="imagen" ColumnName="imagen" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="Empleado_tecnico" ColumnName="Empleado_tecnico" />
+                <ScalarProperty Name="Empleado_recepcion" ColumnName="Empleado_recepcion" />
+                <ScalarProperty Name="Fecha_fin" ColumnName="Fecha_fin" />
+                <ScalarProperty Name="Fecha_inicio" ColumnName="Fecha_inicio" />
+                <ScalarProperty Name="Equipo" ColumnName="Equipo" />
+                <ScalarProperty Name="Problema" ColumnName="Problema" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="soporte">
+            <EntityTypeMapping TypeName="bdsyscomModel.soporte">
+              <MappingFragment StoreEntitySet="soporte">
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="Empleado_tecnico" ColumnName="Empleado_tecnico" />
+                <ScalarProperty Name="Empleado_recepcion" ColumnName="Empleado_recepcion" />
+                <ScalarProperty Name="Fecha_Fin" ColumnName="Fecha_Fin" />
+                <ScalarProperty Name="Fecha_inicio" ColumnName="Fecha_inicio" />
+                <ScalarProperty Name="Actividad" ColumnName="Actividad" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipo_Usuario">
+            <EntityTypeMapping TypeName="bdsyscomModel.Tipo_Usuario">
+              <MappingFragment StoreEntitySet="Tipo_Usuario">
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

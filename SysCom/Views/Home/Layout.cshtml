@@ -1,0 +1,252 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    @Styles.Render("~/Content/css")
+
+    <title>@ViewBag.Title - SysCom</title>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+
+    <style type="text/css">
+
+        #navbar {
+            background-color: #ffffff;
+            height: 110px;
+            border-radius: 20px;
+            width: 95%;
+            margin: 0 auto;
+        }
+
+        .alinear-top {
+            padding-top: 20px;
+        }
+
+        .nav-link {
+            color: rgb(48, 48, 48);
+            font-size: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+            .nav-link:hover {
+                color: #1f0744;
+            }
+
+        body {
+            background-color: #5c84cc;
+            padding-top: 20px !important;
+        }
+
+        #lista {
+            color: rgb(48, 48, 48);
+            font-size: 16px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #itemUser {
+            color: gray;
+            font-size: 16px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .dropdown-submenu {
+            position: relative;
+        }
+
+            .dropdown-submenu .dropdown-menu {
+                top: 0;
+                left: 100%;
+                margin-top: -1px;
+            }
+
+        .dropdown-menu li:hover > ul {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div id="navbar">
+        <nav class="navbar navbar-expand-lg">
+
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                </button>
+                <div class="collapse navbar-collapse">
+
+                    <!--Logotipo/marca de una empresa -->
+                    <a class="navbar-brand" id="logo">
+                        <img src="~/Content/Imagenes/logo.jpg" height="80" class="d-inline-block align-top" alt="">
+                    </a>
+
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown alinear-top">
+                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Clientes
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" id="lista" href="@Url.Action("Create", "clientes")">
+                                    Nuevo cliente
+                                </a>
+                                <div class="dropdown-divider"></div>
+
+                                <a class="dropdown-item" id="lista" href="@Url.Action("Index", "clientes")">
+                                    Lista de Clientes
+                                </a>
+
+                            </div>
+                        </li>
+
+
+
+                        <li class="nav-item dropdown alinear-top">
+
+                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                CRM
+                            </a>
+
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li class="dropdown-submenu" id="lista">
+                                    <a class="test" href="#">Agregar orden <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" id="lista">
+                                        <li><a href="@Url.Action("Create", "soportes")">Soporte</a></li>
+                                        <li class="dropdown-divider"></li>
+                                        <li><a href="@Url.Action("Create", "recepcions")">Recepcion</a> </li>
+                                    </ul>
+
+                                </li>
+
+                                <li class="dropdown-divider"></li>
+
+                                <li class="dropdown-submenu" id="lista">
+                                    <a class="test" href="#">Consultar orden <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" id="lista">
+                                        <li><a href="@Url.Action("Index", "soportes")">Soporte</a></li>
+                                        <li class="dropdown-divider"></li>
+                                        <li><a href="@Url.Action("Index", "recepcions")">Recepcion</a> </li>
+                                    </ul>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+
+                        @if (User.Identity.IsAuthenticated)
+
+                        {
+                            
+                            int tipoUsuario = 0;
+                            String Usuario = string.Empty;
+
+                            ///Tipo de usuario
+                            if (HttpContext.Current.Request.IsAuthenticated)
+                            {
+                                Usuario = HttpContext.Current.User.Identity.Name.Split('|')[0];
+                                tipoUsuario = Convert.ToInt32(HttpContext.Current.User.Identity.Name.Split('|')[1]);
+                            }
+
+                            if (tipoUsuario == 1)
+                            {
+                                // Si es administrador puede ver y editar empleados
+
+                                <li class="nav-item dropdown alinear-top">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Empleados
+                                    </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                        <a class="dropdown-item" id="lista" href="@Url.Action("Create", "empleados")">
+                                            Nuevo empleado
+                                        </a>
+
+                                        <div class="dropdown-divider"></div>
+
+                                        <a class="dropdown-item" id="lista" href="@Url.Action("Index", "empleados")">
+                                            Consultar empleados
+                                        </a>
+
+                                    </div>
+                                </li>
+
+                            }
+                            
+
+                            //Cerrar sesión
+                            <li class="nav-item dropdown alinear-top">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Cerrar sesión
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item disabled " href="#" id="itemUser">
+                                        @{
+                                            string userName = HttpContext.Current.User.Identity.Name;
+                                        } <i class="fas fa-user"></i> Usuario: @userName
+                                    </a>
+
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="~/Home/Logout" id="lista"><i class="fas fa-sign-out-alt"></i>Cerrar sesión</a>
+
+                                </div>
+                            </li>
+                            //Fin de terminar sesion
+                        }
+
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+       
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-submenu a.test').on("click", function (e) {
+                $(this).next('ul').toggle();
+                e.stopPropagation();
+                e.preventDefault();
+            });
+        });
+
+    </script>
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
+

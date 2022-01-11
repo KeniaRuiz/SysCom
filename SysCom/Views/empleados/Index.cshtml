@@ -1,0 +1,91 @@
+﻿@model IEnumerable<SysCom.Models.empleados>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Home/Layout.cshtml";
+}
+
+<head>
+    <style type="text/css">
+
+        body {
+            background-color: #5c84cc
+        }
+
+        #contenedor {
+            background-color: #ffffff;
+            height: 110px;
+            border-radius: 20px;
+            width: 95%;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1180px !important;
+        }
+
+        .body-content {
+            background-color: #ffffff;
+            border-radius: 20px;
+            margin-top: 20px;
+            padding-top: 30px;
+            font-size: 15px;
+        }
+
+        form input {
+            font-size: 14px !important;
+        }
+    </style>
+</head>
+
+<h2>Lista de empleados</h2>
+
+<p>
+    @Html.ActionLink("Nuevo empleado", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Usuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Contraseña)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cActivo.Estatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tipo_Usuario.Tipo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Contraseña)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cActivo.Estatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tipo_Usuario.Tipo)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

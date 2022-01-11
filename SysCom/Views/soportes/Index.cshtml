@@ -1,0 +1,105 @@
+﻿@model IEnumerable<SysCom.Models.soporte>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Home/Layout.cshtml";
+}
+
+<head>
+    <style type="text/css">
+
+        body {
+            background-color: #5c84cc
+        }
+
+        #contenedor {
+            background-color: #ffffff;
+            height: 110px;
+            border-radius: 20px;
+            width: 95%;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1180px !important;
+        }
+
+        .body-content {
+            background-color: #ffffff;
+            border-radius: 20px;
+            margin-top: 20px;
+            padding-top: 30px;
+            font-size: 15px;
+        }
+
+        form input {
+            font-size: 14px !important;
+        }
+    </style>
+</head>
+
+<h2>Consulta de ordenes de soporte</h2>
+
+<p>
+    @Html.ActionLink("Nueva orden", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Actividad)
+        </th>
+        <th>
+            @Html.DisplayName("Fecha inicio")
+        </th>
+        <th>
+            @Html.DisplayName("Fecha final")
+        </th>
+        <th>
+            @Html.DisplayName("Estatus")
+        </th>
+        <th>
+            @Html.DisplayName("Nombre cliente")
+        </th>
+        <th>
+            @Html.DisplayName("Nombre recepción")
+        </th>
+        <th>
+            @Html.DisplayName("Fecha tecnico")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Actividad)
+        </td>
+        <td>
+            @*Html.DisplayFor(modelItem => item.Fecha_inicio)*@
+            @item.Fecha_inicio.ToString("dd-MM-yyyy")
+        </td>
+        <td>
+            @*Html.DisplayFor(modelItem => item.Fecha_Fin)*@
+            @item.Fecha_Fin.Value.ToString("dd-MM-yyyy")
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cEstatus.estatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.clientes.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.empleados.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.empleados1.Nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

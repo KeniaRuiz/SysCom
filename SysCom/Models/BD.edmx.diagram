@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c5db7498193840ed9ea3d38502f281cf" Name="Diagram1" ZoomLevel="105">
+        <EntityTypeShape EntityType="bdsyscomModel.Actualizaciones" Width="1.5" PointX="10.5" PointY="8.375" />
+        <EntityTypeShape EntityType="bdsyscomModel.cActivo" Width="1.5" PointX="0.75" PointY="3.625" />
+        <EntityTypeShape EntityType="bdsyscomModel.cEstatus" Width="1.5" PointX="6" PointY="4.5" />
+        <EntityTypeShape EntityType="bdsyscomModel.clientes" Width="1.5" PointX="3" PointY="10" />
+        <EntityTypeShape EntityType="bdsyscomModel.empleados" Width="1.5" PointX="3" PointY="5.75" />
+        <EntityTypeShape EntityType="bdsyscomModel.recepcion" Width="1.5" PointX="8.25" PointY="7.5" />
+        <EntityTypeShape EntityType="bdsyscomModel.soporte" Width="1.5" PointX="5.25" PointY="7.75" />
+        <EntityTypeShape EntityType="bdsyscomModel.Tipo_Usuario" Width="1.5" PointX="0.75" PointY="6.5" />
+        <AssociationConnector Association="bdsyscomModel.FK_Actualizaciones_recepcion" />
+        <AssociationConnector Association="bdsyscomModel.FK_empleados_cActivo" />
+        <AssociationConnector Association="bdsyscomModel.FK_recepcion_cEstatus" />
+        <AssociationConnector Association="bdsyscomModel.FK_soporte_cEstatus" />
+        <AssociationConnector Association="bdsyscomModel.FK_clientes_Tipo_Usuario" />
+        <AssociationConnector Association="bdsyscomModel.FK_recepcion_clientes" />
+        <AssociationConnector Association="bdsyscomModel.FK_soporte_clientes" />
+        <AssociationConnector Association="bdsyscomModel.FK_empleados_Tipo_Usuario" />
+        <AssociationConnector Association="bdsyscomModel.FK_recepcion_empleados" />
+        <AssociationConnector Association="bdsyscomModel.FK_recepcion_empleados1" />
+        <AssociationConnector Association="bdsyscomModel.FK_soporte_empleados" />
+        <AssociationConnector Association="bdsyscomModel.FK_soporte_empleados1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

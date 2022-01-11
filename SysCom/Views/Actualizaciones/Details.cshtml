@@ -1,0 +1,35 @@
+﻿@model SysCom.Models.Actualizaciones
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Home/Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Actualizaciones</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Actualizacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Actualizacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.recepcion.Problema)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.recepcion.Problema)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,129 @@
+﻿@model SysCom.Models.recepcion
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Home/Layout.cshtml";
+}
+
+<head>
+    <style type="text/css">
+
+        body {
+            background-color: #5c84cc
+        }
+
+        #contenedor {
+            background-color: #ffffff;
+            height: 110px;
+            border-radius: 20px;
+            width: 95%;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1290px !important;
+        }
+
+        .body-content {
+            background-color: #ffffff;
+            border-radius: 20px;
+            margin-top: 20px;
+            padding-top: 30px;
+            font-size: 15px;
+        }
+
+        form input {
+            font-size: 14px !important;
+        }
+    </style>
+</head>
+
+<h2>Eliminar oden de recepción</h2>
+
+<h4>¿Seguro que desea eliminar esta orden?</h4>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Problema)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Problema)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Equipo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Equipo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_inicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_inicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_fin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_fin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.imagen)
+        </dt>
+
+        <dd>
+            <img width="200"  src="@Url.Action("ConvertirImagen","recepcions", new { ID = Model.ID})" />
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cEstatus.estatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cEstatus.estatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.clientes.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.clientes.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.empleados.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.empleados.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.empleados1.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.empleados1.Nombre)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Elimar orden" class="btn btn-default" /> |
+            @Html.ActionLink("Lista de ordenes", "Index")
+        </div>
+    }
+</div>
